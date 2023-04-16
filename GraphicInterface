@@ -1,0 +1,54 @@
+
+class AdjacencyListGraph : public GraphicInterface {
+private:
+    list<int>* adjacencyList;
+    int numVertices;
+    bool directed;
+
+public:
+    AdjacencyListGraph(int numVertices, bool directed) {
+        this->numVertices = numVertices;
+        this->directed = directed;
+        adjacencyList = new list<int>[numVertices];
+    }
+
+    void addEdge(int v1, int v2) {
+        if (v1 >= 0 && v1 < numVertices && v2 >= 0 && v2 < numVertices) {
+            adjacencyList[v1].push_back(v2);
+            if (!directed) {
+                adjacencyList[v2].push_back(v1);
+            }
+        }
+    }
+
+    void removeEdge(int v1, int v2) {
+        if (v1 >= 0 && v1 < numVertices && v2 >= 0
+          and v2 >= 0 && v2 < numVertices) {
+            adjacencyList[v1].remove(v2);
+            if (!directed) {
+                adjacencyList[v2].remove(v1);
+            }
+        }
+    }
+
+    bool isConnected(int v1, int v2) {
+        if (v1 >= 0 && v1 < numVertices && v2 >= 0 && v2 < numVertices) {
+            for (int i : adjacencyList[v1]) {
+                if (i == v2) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    void display() {
+        for (int i = 0; i < numVertices; i++) {
+            cout << i << ": ";
+            for (int j : adjacencyList[i]) {
+                cout << j << " ";
+            }
+            cout << endl;
+        }
+    }
+};
