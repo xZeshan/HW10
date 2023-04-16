@@ -1,0 +1,32 @@
+
+class WeightedGraph : public GraphicInterface {
+private:
+    list<pair<int, int>>* adjacencyList;
+    int numVertices;
+    bool directed;
+    bool weighted;
+
+public:
+    WeightedGraph(int numVertices, bool directed, bool weighted) {
+        this->numVertices = numVertices;
+        this->directed = directed;
+        this->weighted = weighted;
+        adjacencyList = new list<pair<int, int>>[numVertices];
+    }
+
+    void addEdge(int v1, int v2, int weight) {
+        if (v1 >= 0 && v1 < numVertices && v2 >= 0 && v2 < numVertices) {
+            if(weighted)
+                adjacencyList[v1].push_back(make_pair(v2, weight));
+            else
+                adjacencyList[v1].push_back(make_pair(v2, 1));
+            if (!directed) {
+                if(weighted)
+                    adjacencyList[v2].push_back(make_pair(v1, weight));
+                else
+                    adjacencyList[v2].push_back(make_pair(v1, 1));
+            }
+        }
+    }
+    // rest of the code
+};
